@@ -5,7 +5,7 @@ namespace Moorscode\Lexer;
 /**
  * Class Lexer
  */
-class Lexer {
+class Lexer implements LexerInterface {
 	/**
 	 * @var array
 	 */
@@ -25,7 +25,7 @@ class Lexer {
 	 *
 	 * @throws \InvalidArgumentException
 	 */
-	public function register_terminal( $identifier, $match ) {
+	public function registerTerminal( $identifier, $match ) {
 		if ( isset( $this->terminals[ $identifier ] ) ) {
 			throw new \InvalidArgumentException( sprintf( 'Terminal %s has already been registered.', $identifier ) );
 		}
@@ -34,7 +34,7 @@ class Lexer {
 	}
 
 	/**
-	 * @param $source
+	 * @param arrau $source
 	 *
 	 * @return array
 	 * @throws \Exception

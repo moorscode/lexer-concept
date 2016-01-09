@@ -2,8 +2,6 @@
 
 namespace Moorscode\Lexer;
 
-use Moorscode\RootListener;
-
 spl_autoload_register(
 	function ( $class ) {
 		require str_replace( '\\', '/', $class ) . '.php';
@@ -16,17 +14,21 @@ $input = array(
 	'root -> Foo::foo',
 );
 
-$listener = new RootListener();
+$interpeter = new Interpeter();
 
-$observer = new Observer();
-$observer->addListener( $listener, 'a5d3be5befe160765fb3ad4bbe4fbbf0' );
+runLexer( $input, new Lexer(), $interpeter );
 
-runLexer( $input, new Lexer(), $observer );
-
-function runLexer( $input, Lexer $lexer, Observer $observer ) {
-	$results = $lexer->run( $input );
-
-	foreach ( $results as $result ) {
-		$observer->handle( $result );
+function runLexer( $input, LexerInterface $lexer, InterpeterInterface $interpeter ) {
+	try {
+		$results = $lexer->run( $input );
+	} catch ( \Exception $exception ) {
+		return false;
 	}
+
+	$batch = $interpeter->begin();
+	foreach ( $results as $result ) {
+		$interpeter->parse( $result, $batch );
+	}
+	$interpeter->end( $batch );
+
 }
