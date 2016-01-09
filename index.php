@@ -25,6 +25,8 @@ function runLexer( $input, LexerInterface $lexer, InterpeterInterface $interpete
 		return false;
 	}
 
+	var_export( $results );
+
 	$batch = $interpeter->begin();
 	foreach ( $results as $result ) {
 		$interpeter->parse( $result, $batch );

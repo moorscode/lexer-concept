@@ -71,11 +71,13 @@ class Lexer implements LexerInterface {
 	 * @return array|bool
 	 */
 	private function match( $line ) {
-		$parts = array_map( array( __CLASS__, 'buildRegEx' ),
+		$parts = array_map(
+			array( __CLASS__, 'buildRegEx' ),
 			array_keys( $this->terminals ),
-			$this->terminals );
+			$this->terminals
+		);
 
-		$full_regex = '/^' . implode( '|', $parts ) . '/';
+		$full_regex = '/' . implode( '|', $parts ) . '/A';
 
 		if ( preg_match_all( $full_regex, $line, $matches, PREG_SET_ORDER ) ) {
 			foreach ( $matches as $match ) {
