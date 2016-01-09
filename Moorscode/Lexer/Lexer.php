@@ -34,7 +34,7 @@ class Lexer implements LexerInterface {
 	}
 
 	/**
-	 * @param arrau $source
+	 * @param array $source
 	 *
 	 * @return array
 	 * @throws \Exception
